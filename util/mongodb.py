@@ -1,8 +1,14 @@
 from pymongo import MongoClient
 from .embedding import get_embedding
 import os
+from urllib.parse import quote_plus
+import certifi
 
-CLUSTER_HOST = "ki-joko-bodo.v2urstf.mongodb.net/?appName=ki-joko-bodo"
+from dotenv import load_dotenv
+load_dotenv()
+
+
+CLUSTER_HOST = "cluster0.bdvqb9v.mongodb.net/?appName=Cluster0"
 
 db_username = os.getenv('db_username')
 db_password = os.getenv('db_password')
@@ -10,7 +16,10 @@ db_password = os.getenv('db_password')
 CONNECTION_STRING = f"mongodb+srv://{db_username}:{db_password}@{CLUSTER_HOST}"
 
 # Connect to your MongoDB deployment
-client = MongoClient(CONNECTION_STRING)
+client = MongoClient(CONNECTION_STRING,
+                    tls=True,
+                    tlsCAFile=certifi.where(),
+                    serverSelectionTimeoutMS=5000)
 collection = client["rag_db"]["rag"]
 
 # Define a function to run vector search queries
@@ -18,7 +27,7 @@ def get_query_results(query):
   """Gets results from a vector search query."""
 
   query_embedding = get_embedding(query)
-  print("QUERY EMBEDDING:", query_embedding)
+  print("QUERY EMBEDDING:", len(query_embedding))
   pipeline = [
       {
             "$vectorSearch": {
@@ -26,6 +35,7 @@ def get_query_results(query):
               "queryVector": query_embedding,
               "path": "embedding",
               "exact": True,
+              "numCandidates": 100, 
               "limit": 5
             }
       }, {
@@ -57,4 +67,15 @@ def get_item_by_product_by_brand(brand):
     products = []
     for product in results:
         products.append(product['text'])
+    return products
+
+
+def get_item_by_material(material: str):
+    results = collection.find(
+        {"material": {"$regex": material, "$options": "i"}}
+    )
+
+    products = []
+    for product in results:
+        products.append(product.get("text"))
     return products

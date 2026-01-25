@@ -1,0 +1,6 @@
+pymongo[srv]
+google-adk
+litellm
+python-dotenv
+pandas
+sentence-transformers

@@ -1,13 +1,57 @@
-# Python-generated files
+# ======================
+# Python
+# ======================
 __pycache__/
-*.py[oc]
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ======================
+# Virtual Environment
+# ======================
+venv/
+.env/
+.env.*
+
+# ======================
+# IDE / Editor
+# ======================
+.vscode/
+.idea/
+
+# ======================
+# OS
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Logs & temp
+# ======================
+*.log
+*.tmp
+
+# ======================
+# ML / Data / Artifacts
+# ======================
+mlruns/
+artifacts/
+models/
+checkpoints/
+data/
+*.pkl
+*.joblib
+
+# ======================
+# Build / cache
+# ======================
 build/
 dist/
-wheels/
-*.egg-info
-*.adk
+*.egg-info/
 
-# Virtual environments
-.venv
-
-.env
+# ======================
+# UV / Poetry
+# ======================
+.uv/
+uv.lock
