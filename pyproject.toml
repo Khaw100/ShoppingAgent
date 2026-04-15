@@ -1,14 +1,16 @@
 [project]
-name = "day-47"
+name = "smart-shopping-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "An AI-powered shopping assistant using Google ADK and MongoDB Atlas Vector Search"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
   "google-adk",
+  "litellm",
   "python-dotenv",
-  "pymongo",
+  "pymongo[srv]",
   "sentence-transformers",
+  "pandas",
   "certifi",
 ]
 [tool.setuptools.packages.find]
