@@ -115,6 +115,3 @@ User message
 
 ---
 
-## 📄 License
-
-MIT
